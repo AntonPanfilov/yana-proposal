@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Техническое задание — Автоматизация риелторского агентства</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: #1a1a2e;
+            background: #fff;
+            line-height: 1.65;
+            font-size: 13.5px;
+        }
+
+        .cover {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #3730a3 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cover-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 8px 24px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover h1 span {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cover-subtitle {
+            font-size: 18px;
+            font-weight: 300;
+            color: #e0e7ff;
+            max-width: 600px;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-meta {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 40px;
+            color: #c7d2fe;
+            font-size: 13px;
+        }
+
+        .page {
+            padding: 45px 55px;
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: linear-gradient(135deg, #4338ca, #6366f1);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 4px;
+            margin-bottom: 14px;
+        }
+
+        h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+
+        h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #312e81;
+            margin: 24px 0 10px;
+        }
+
+        h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e1b4b;
+            margin: 16px 0 8px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: #374151;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+        }
+
+        thead th {
+            background: #1e1b4b;
+            color: #fff;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        thead th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        thead th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        tbody td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #374151;
+            vertical-align: top;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .req-table td:first-child {
+            font-weight: 600;
+            color: #312e81;
+            white-space: nowrap;
+            width: 80px;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #4338ca;
+        }
+
+        .info-box {
+            background: #eef2ff;
+            border-left: 4px solid #6366f1;
+            border-radius: 0 10px 10px 0;
+            padding: 18px 22px;
+            margin: 18px 0;
+        }
+
+        .info-box h4 {
+            color: #4338ca;
+            margin: 0 0 6px;
+            font-size: 13px;
+        }
+
+        .info-box p {
+            margin: 0;
+            font-size: 13px;
+            color: #4338ca;
+        }
+
+        .warn-box {
+            background: #fefce8;
+            border-left: 4px solid #eab308;
+            border-radius: 0 10px 10px 0;
+            padding: 18px 22px;
+            margin: 18px 0;
+        }
+
+        .warn-box h4 {
+            color: #a16207;
+            margin: 0 0 6px;
+            font-size: 13px;
+        }
+
+        .warn-box p {
+            margin: 0;
+            font-size: 13px;
+            color: #a16207;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        li {
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #374151;
+        }
+
+        li::marker {
+            color: #6366f1;
+        }
+
+        .toc {
+            margin: 20px 0;
+        }
+
+        .toc a {
+            display: block;
+            padding: 8px 0;
+            color: #4338ca;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .toc a:hover {
+            color: #312e81;
+        }
+
+        .toc a span {
+            color: #94a3b8;
+            margin-right: 12px;
+            font-weight: 600;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 30px;
+        }
+
+        .sig-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .sig-item {
+            border-top: 2px solid #1e1b4b;
+            padding-top: 16px;
+        }
+
+        .sig-item h4 {
+            color: #312e81;
+            font-size: 13px;
+            margin: 0 0 4px;
+        }
+
+        .sig-item p {
+            font-size: 12px;
+            color: #64748b;
+            margin: 0;
+        }
+
+        @media print {
+            .page {
+                padding: 35px 45px;
+            }
+        }
+
+        /* ─── PORTAL NAV ─── */
+        .portal-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 24px;
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        .portal-nav .nav-tabs {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .portal-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #94a3b8;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .portal-nav a:hover {
+            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .portal-nav a.active {
+            color: #fff;
+            background: rgba(99, 102, 241, 0.25);
+            border-color: rgba(99, 102, 241, 0.4);
+            font-weight: 600;
+        }
+
+        .portal-nav .pdf-link {
+            padding: 4px 10px;
+            font-size: 11px;
+            color: #c7d2fe;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            border-radius: 6px;
+            margin-left: 4px;
+        }
+
+        .portal-nav .pdf-link:hover {
+            background: rgba(99, 102, 241, 0.4);
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .portal-nav {
+                flex-direction: column;
+                padding: 8px 12px;
+                gap: 6px;
+            }
+
+            .portal-nav .nav-tabs {
+                flex-direction: column;
+                width: 100%;
+                gap: 3px;
+            }
+
+            .portal-nav a {
+                justify-content: center;
+                padding: 10px 14px;
+            }
+        }
+
+        @media print {
+            .portal-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="portal-nav">
+        <div class="nav-tabs">
+            <a href="01-commercial-proposal.html">📋 Коммерческое предложение <span class="pdf-link"
+                    onclick="event.preventDefault();window.open('01-Коммерческое-Предложение.pdf')">⬇ PDF</span></a>
+            <a href="02-work-plan.html">📅 План работ <span class="pdf-link"
+                    onclick="event.preventDefault();window.open('02-План-Работ.pdf')">⬇ PDF</span></a>
+            <a href="03-technical-spec.html" class="active">⚙️ Техническое задание <span class="pdf-link"
+                    onclick="event.preventDefault();window.open('03-Техническое-Задание.pdf')">⬇ PDF</span></a>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════ ОБЛОЖКА ═══════════════════ -->
+    <div class="cover">
+        <div class="cover-badge">Техническое задание</div>
+        <h1>Автоматизация<br><span>Привлечения Агентов</span></h1>
+        <p class="cover-subtitle">
+            Система автоматического обзвона, обработки заявок в CRM и ИИ-анализа качества работы менеджеров для
+            риелторского агентства
+        </p>
+        <div class="cover-meta">
+            <span>Заказчик: Яна</span>
+            <span>13 февраля 2026</span>
+            <span>v1.0</span>
+        </div>
+    </div>
+
+    <!-- ═══════════════════ СОДЕРЖАНИЕ ═══════════════════ -->
+    <div class="page">
+        <div class="section-label">Содержание</div>
+        <h2>Оглавление</h2>
+        <p class="subtitle">Структура технического задания</p>
+
+        <div class="toc">
+            <a href="#s1"><span>01</span> Общие сведения</a>
+            <a href="#s2"><span>02</span> Назначение и цели системы</a>
+            <a href="#s3"><span>03</span> Функциональные требования</a>
+            <a href="#s4"><span>04</span> Модуль 1: Telegram-бот (клиентский)</a>
+            <a href="#s5"><span>05</span> Модуль 2: Автообзвон (Zvonok.com)</a>
+            <a href="#s6"><span>06</span> Модуль 3: CRM-система (AmoCRM)</a>
+            <a href="#s7"><span>07</span> Модуль 4: ИИ-анализ разговоров</a>
+            <a href="#s8"><span>08</span> Модуль 5: Векторная база знаний</a>
+            <a href="#s9"><span>09</span> Модуль 6: Служебный Telegram-бот</a>
+            <a href="#s10"><span>10</span> Нефункциональные требования</a>
+            <a href="#s11"><span>11</span> Технологический стек</a>
+            <a href="#s12"><span>12</span> Условия приёмки</a>
+        </div>
+    </div>
+
+    <!-- ═══════════════════ ОБЩИЕ СВЕДЕНИЯ ═══════════════════ -->
+    <div class="page" id="s1">
+        <div class="section-label">Раздел 01</div>
+        <h2>Общие сведения</h2>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td><strong>Название проекта</strong></td>
+                    <td>Система автоматизации привлечения агентов для риелторского агентства</td>
+                </tr>
+                <tr>
+                    <td><strong>Заказчик</strong></td>
+                    <td>Яна (организатор агентства)</td>
+                </tr>
+                <tr>
+                    <td><strong>Дата составления</strong></td>
+                    <td>13 февраля 2026</td>
+                </tr>
+                <tr>
+                    <td><strong>Версия ТЗ</strong></td>
+                    <td>1.0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Глоссарий</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Термин</th>
+                    <th>Описание</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>IVR</strong></td>
+                    <td>Interactive Voice Response — интерактивное голосовое меню</td>
+                </tr>
+                <tr>
+                    <td><strong>DTMF</strong></td>
+                    <td>Dual-Tone Multi-Frequency — тональный набор (нажатие кнопок)</td>
+                </tr>
+                <tr>
+                    <td><strong>CRM</strong></td>
+                    <td>Customer Relationship Management — система управления клиентами</td>
+                </tr>
+                <tr>
+                    <td><strong>LLM</strong></td>
+                    <td>Large Language Model — большая языковая модель (GPT-4)</td>
+                </tr>
+                <tr>
+                    <td><strong>RAG</strong></td>
+                    <td>Retrieval-Augmented Generation — генерация с дополнением из базы знаний</td>
+                </tr>
+                <tr>
+                    <td><strong>STT</strong></td>
+                    <td>Speech-to-Text — распознавание речи (Whisper)</td>
+                </tr>
+                <tr>
+                    <td><strong>РОП</strong></td>
+                    <td>Руководитель отдела продаж (виртуальный, на основе ИИ)</td>
+                </tr>
+                <tr>
+                    <td><strong>Webhook</strong></td>
+                    <td>HTTP-запрос, отправляемый сервисом при наступлении события</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 id="s2">Назначение и цели системы</h3>
+        <p>Система предназначена для автоматизации процесса привлечения агентов по недвижимости в агентство заказчика.
+        </p>
+
+        <h4>Бизнес-цели:</h4>
+        <ol>
+            <li>Массовый автоматический обзвон базы риелторов с коммерческим предложением</li>
+            <li>Автоматическая фильтрация заинтересованных агентов</li>
+            <li>Создание заявок в CRM и уведомление менеджеров</li>
+            <li>Запись и анализ качества разговоров менеджеров средствами ИИ</li>
+            <li>Системное улучшение навыков продаж через рекомендации ИИ</li>
+            <li>Накопление базы знаний для повышения качества анализа</li>
+        </ol>
+    </div>
+
+    <!-- ═══════════════════ ФУНКЦИОНАЛЬНЫЕ ТРЕБОВАНИЯ ═══════════════════ -->
+    <div class="page" id="s3">
+        <div class="section-label">Раздел 03</div>
+        <h2>Функциональные требования</h2>
+        <p class="subtitle">Детальное описание каждого модуля системы</p>
+
+        <h3 id="s4">Модуль 1: Telegram-бот (Клиентский)</h3>
+        <p>Интерфейс для заказчика (Яны) для управления кампаниями обзвона.</p>
+
+        <table class="req-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Требование</th>
+                    <th>Приоритет</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>TG-01</td>
+                    <td>Бот принимает файлы форматов CSV и Excel (xlsx) с базой номеров</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>TG-02</td>
+                    <td>Поддерживаемые столбцы: <code>phone</code> (обяз.), <code>name</code>, <code>city</code>,
+                        <code>agency</code>
+                    </td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>TG-03</td>
+                    <td>Команда <code>/schedule</code> — настройка расписания: дни недели, дата, время начала/окончания
+                    </td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>TG-04</td>
+                    <td>Команда <code>/status</code> — текущий статус кампании (позвонено, заинтересовано, в процессе)
+                    </td>
+                    <td>Средний</td>
+                </tr>
+                <tr>
+                    <td>TG-05</td>
+                    <td>Команда <code>/stop</code> — остановка текущей кампании обзвона</td>
+                    <td>Средний</td>
+                </tr>
+                <tr>
+                    <td>TG-06</td>
+                    <td>Команда <code>/report</code> — итоговый отчёт по кампании</td>
+                    <td>Средний</td>
+                </tr>
+                <tr>
+                    <td>TG-07</td>
+                    <td>Валидация номеров: формат 79XXXXXXXXX, удаление дубликатов</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>TG-08</td>
+                    <td>Авторизация через Telegram Pairing (только автор. пользователи)</td>
+                    <td>Высокий</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 id="s5">Модуль 2: Автообзвон (Zvonok.com)</h3>
+        <p>Массовый обзвон базы контактов через API Zvonok.com.</p>
+
+        <table class="req-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Требование</th>
+                    <th>Приоритет</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ZV-01</td>
+                    <td>Массовое добавление номеров в кампанию через API (<code>phones/mass_create</code>)</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>ZV-02</td>
+                    <td>IVR-сценарий: воспроизведение текста коммерческого предложения</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>ZV-03</td>
+                    <td>Обработка DTMF: кнопка «1» = заинтересован</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>ZV-04</td>
+                    <td>Webhook на наш сервер при нажатии DTMF и завершении звонка</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>ZV-05</td>
+                    <td>Соблюдение rate limit: не более 16-20 request/sec</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>ZV-06</td>
+                    <td>Обзвон только в рабочие часы (10:00-18:00 МСК)</td>
+                    <td>Средний</td>
+                </tr>
+                <tr>
+                    <td>ZV-07</td>
+                    <td>Получение результатов обзвона через API для отчётности</td>
+                    <td>Средний</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 id="s6">Модуль 3: CRM-система (AmoCRM)</h3>
+        <p>Управление лидами, сделками и записями разговоров.</p>
+
+        <table class="req-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Требование</th>
+                    <th>Приоритет</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CRM-01</td>
+                    <td>Автоматическое создание контакта при нажатии DTMF «1»</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>CRM-02</td>
+                    <td>Автоматическое создание сделки, привязка к контакту</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>CRM-03</td>
+                    <td>Воронка продаж из 6 этапов: Новая заявка → Перезвон → В работе → Документы → Успешно / Отказ
+                    </td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>CRM-04</td>
+                    <td>OAuth 2.0 с автоматическим обновлением токенов</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>CRM-05</td>
+                    <td>Привязка записи звонка к сделке через API calls</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>CRM-06</td>
+                    <td>Webhook при завершении звонка менеджера (ссылка на запись)</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>CRM-07</td>
+                    <td>Добавление ИИ-анализа как примечание к сделке</td>
+                    <td>Средний</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ═══════════════════ МОДУЛИ 4-6 ═══════════════════ -->
+    <div class="page" id="s7">
+        <h3>Модуль 4: ИИ-анализ разговоров (виртуальный РОП)</h3>
+        <p>Транскрипция и анализ качества каждого разговора менеджера.</p>
+
+        <table class="req-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Требование</th>
+                    <th>Приоритет</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>AI-01</td>
+                    <td>Транскрипция аудиозаписей через OpenAI Whisper API (язык: ru)</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>AI-02</td>
+                    <td>Поддержка аудиофайлов до 25MB; для больших — автоматическая нарезка</td>
+                    <td>Средний</td>
+                </tr>
+                <tr>
+                    <td>AI-03</td>
+                    <td>LLM-анализ по 5 критериям (1-10 баллов каждый):
+                        <ul style="margin-top:4px">
+                            <li>Приветствие и установление контакта</li>
+                            <li>Выявление потребностей</li>
+                            <li>Презентация предложения</li>
+                            <li>Работа с возражениями</li>
+                            <li>Закрытие сделки</li>
+                        </ul>
+                    </td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>AI-04</td>
+                    <td>Общая оценка разговора (1-10 баллов)</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>AI-05</td>
+                    <td>Определение уровня заинтересованности агента: high / medium / low / none</td>
+                    <td>Средний</td>
+                </tr>
+                <tr>
+                    <td>AI-06</td>
+                    <td>Список сильных сторон менеджера (минимум 2-3)</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>AI-07</td>
+                    <td>Список слабых сторон / зон роста (минимум 2-3)</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>AI-08</td>
+                    <td>Конкретные рекомендации по улучшению (минимум 3)</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>AI-09</td>
+                    <td>Обязательная похвала за успехи менеджера</td>
+                    <td>Средний</td>
+                </tr>
+                <tr>
+                    <td>AI-10</td>
+                    <td>Различение типов разговоров: первый звонок / повторный</td>
+                    <td>Низкий</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 id="s8">Модуль 5: Векторная база знаний (RAG)</h3>
+
+        <table class="req-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Требование</th>
+                    <th>Приоритет</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>RAG-01</td>
+                    <td>Хранение всех транскрипций с метаданными (lead_id, менеджер, дата, оценка)</td>
+                    <td>Средний</td>
+                </tr>
+                <tr>
+                    <td>RAG-02</td>
+                    <td>Хранение эталонных скриптов, FAQ, описания предложения</td>
+                    <td>Средний</td>
+                </tr>
+                <tr>
+                    <td>RAG-03</td>
+                    <td>Семантический поиск по истории разговоров</td>
+                    <td>Средний</td>
+                </tr>
+                <tr>
+                    <td>RAG-04</td>
+                    <td>RAG-обогащение LLM-анализа: сравнение с лучшими практиками и эталонами</td>
+                    <td>Средний</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 id="s9">Модуль 6: Служебный Telegram-бот</h3>
+
+        <table class="req-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Требование</th>
+                    <th>Приоритет</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>SRV-01</td>
+                    <td>Отправка форматированного ИИ-отчёта после каждого разговора</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>SRV-02</td>
+                    <td>Формат: оценки (эмодзи), сильные стороны, зоны роста, рекомендации, похвала</td>
+                    <td>Высокий</td>
+                </tr>
+                <tr>
+                    <td>SRV-03</td>
+                    <td>Авторизация менеджеров через Telegram Pairing</td>
+                    <td>Средний</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ═══════════════════ НЕФУНКЦИОНАЛЬНЫЕ + СТЕК ═══════════════════ -->
+    <div class="page" id="s10">
+        <div class="section-label">Раздел 10</div>
+        <h2>Нефункциональные требования</h2>
+
+        <h3>Безопасность</h3>
+        <table class="req-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Требование</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>SEC-01</td>
+                    <td>Все webhook-эндпоинты доступны только по HTTPS (SSL через Nginx + Let's Encrypt)</td>
+                </tr>
+                <tr>
+                    <td>SEC-02</td>
+                    <td>API-ключи хранятся в файлах <code>.env</code>, не в исходном коде</td>
+                </tr>
+                <tr>
+                    <td>SEC-03</td>
+                    <td>IP-фильтрация для входящих webhook (белый список IP Zvonok.com и AmoCRM)</td>
+                </tr>
+                <tr>
+                    <td>SEC-04</td>
+                    <td>Аутентификация AmoCRM через OAuth 2.0 с автоматическим обновлением токенов</td>
+                </tr>
+                <tr>
+                    <td>SEC-05</td>
+                    <td>Доступ к Telegram-ботам только для авторизованных пользователей</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Надёжность</h3>
+        <table class="req-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Требование</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>REL-01</td>
+                    <td>Retry-логика для webhook: повторная отправка при ошибке (до 3 попыток)</td>
+                </tr>
+                <tr>
+                    <td>REL-02</td>
+                    <td>Обработка rate limit Zvonok.com (20 req/sec) с экспоненциальным backoff</td>
+                </tr>
+                <tr>
+                    <td>REL-03</td>
+                    <td>Логирование всех операций: запросы к API, webhook, ошибки</td>
+                </tr>
+                <tr>
+                    <td>REL-04</td>
+                    <td>Автоматический перезапуск сервисов (Docker restart policy)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 id="s11">Технологический стек</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Компонент</th>
+                    <th>Технология</th>
+                    <th>Версия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ИИ-агент / Оркестратор</td>
+                    <td>OpenClaw</td>
+                    <td>Latest</td>
+                </tr>
+                <tr>
+                    <td>Язык программирования</td>
+                    <td>Python</td>
+                    <td>3.11+</td>
+                </tr>
+                <tr>
+                    <td>Автообзвон</td>
+                    <td>Zvonok.com API</td>
+                    <td>v1</td>
+                </tr>
+                <tr>
+                    <td>CRM</td>
+                    <td>AmoCRM API</td>
+                    <td>v4</td>
+                </tr>
+                <tr>
+                    <td>Распознавание речи</td>
+                    <td>OpenAI Whisper</td>
+                    <td>whisper-1</td>
+                </tr>
+                <tr>
+                    <td>ИИ-анализ</td>
+                    <td>OpenAI GPT-4o</td>
+                    <td>Latest</td>
+                </tr>
+                <tr>
+                    <td>Embedding</td>
+                    <td>OpenAI text-embedding-3-small</td>
+                    <td>Latest</td>
+                </tr>
+                <tr>
+                    <td>Векторная БД</td>
+                    <td>Qdrant</td>
+                    <td>Latest (Docker)</td>
+                </tr>
+                <tr>
+                    <td>Мессенджер</td>
+                    <td>Telegram Bot API</td>
+                    <td>v7+</td>
+                </tr>
+                <tr>
+                    <td>Контейнеризация</td>
+                    <td>Docker + Docker Compose</td>
+                    <td>Latest</td>
+                </tr>
+                <tr>
+                    <td>Web-сервер</td>
+                    <td>Nginx</td>
+                    <td>Latest</td>
+                </tr>
+                <tr>
+                    <td>SSL</td>
+                    <td>Let's Encrypt (Certbot)</td>
+                    <td>Latest</td>
+                </tr>
+                <tr>
+                    <td>Хостинг</td>
+                    <td>VPS (Contabo / Hetzner)</td>
+                    <td>4 vCPU, 8GB RAM</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 id="s12">Условия приёмки</h3>
+        <div class="info-box">
+            <h4>Критерии успешной сдачи проекта</h4>
+            <p>Система считается принятой при выполнении <strong>всех</strong> нижеперечисленных условий.</p>
+        </div>
+        <ol>
+            <li>Telegram-бот принимает файл с номерами и настраивает расписание обзвона</li>
+            <li>Робот Zvonok.com звонит по базе и воспроизводит коммерческое предложение</li>
+            <li>При нажатии «1» — автоматически создаётся контакт и сделка в AmoCRM</li>
+            <li>Менеджер получает уведомление и перезванивает через IP-телефонию</li>
+            <li>Разговор записывается и автоматически транскрибируется</li>
+            <li>ИИ выдаёт оценку по 5 критериям с рекомендациями</li>
+            <li>Менеджер получает отчёт в служебном Telegram-боте</li>
+            <li>Результаты анализа сохраняются в AmoCRM и векторной БД</li>
+            <li>Система работает стабильно в течение 3 дней пилотного режима</li>
+        </ol>
+
+        <div class="sig-block">
+            <div class="sig-item">
+                <h4>Заказчик</h4>
+                <p>Яна</p>
+                <p style="margin-top:30px;border-bottom:1px solid #94a3b8;width:200px;">&nbsp;</p>
+                <p>Подпись / Дата</p>
+            </div>
+            <div class="sig-item">
+                <h4>Исполнитель</h4>
+                <p>&nbsp;</p>
+                <p style="margin-top:30px;border-bottom:1px solid #94a3b8;width:200px;">&nbsp;</p>
+                <p>Подпись / Дата</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 · Техническое задание v1.0 · Подготовлено для Яны
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>План работ — Автоматизация риелторского агентства</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: #1a1a2e;
+            background: #fff;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .cover {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #047857 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cover-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 8px 24px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover h1 span {
+            background: linear-gradient(135deg, #d1fae5, #6ee7b7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cover-subtitle {
+            font-size: 18px;
+            font-weight: 300;
+            color: #d1fae5;
+            max-width: 600px;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-meta {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 40px;
+            color: #a7f3d0;
+            font-size: 13px;
+        }
+
+        .page {
+            padding: 50px 60px;
+            min-height: 100vh;
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #064e3b;
+            margin: 28px 0 12px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            color: #374151;
+        }
+
+        /* ─── PHASE CARD ─── */
+        .phase {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 24px;
+            background: #f0fdf4;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .phase-num {
+            min-width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .phase-title {
+            flex: 1;
+        }
+
+        .phase-title h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #064e3b;
+        }
+
+        .phase-title span {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .phase-duration {
+            background: #064e3b;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .phase-body {
+            padding: 20px 24px;
+        }
+
+        .phase-body ul {
+            padding-left: 20px;
+        }
+
+        .phase-body li {
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #374151;
+        }
+
+        .phase-body li::marker {
+            color: #10b981;
+        }
+
+        .deliverable {
+            background: #ecfdf5;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .deliverable strong {
+            color: #064e3b;
+        }
+
+        /* ─── GANTT ─── */
+        .gantt-container {
+            margin: 30px 0;
+            overflow-x: auto;
+        }
+
+        .gantt {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .gantt th {
+            background: #064e3b;
+            color: #fff;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .gantt th:first-child {
+            text-align: left;
+            padding-left: 16px;
+            min-width: 200px;
+        }
+
+        .gantt td {
+            padding: 8px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+            position: relative;
+        }
+
+        .gantt td:first-child {
+            text-align: left;
+            padding-left: 16px;
+            font-weight: 500;
+        }
+
+        .gantt-bar {
+            background: linear-gradient(90deg, #10b981, #34d399);
+            height: 24px;
+            border-radius: 6px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 4px;
+            right: 4px;
+        }
+
+        .gantt-bar-label {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 24px;
+        }
+
+        .gantt tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        .milestone-box {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .milestone-box h4 {
+            color: #064e3b;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .milestone-box p {
+            color: #047857;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        table:not(.gantt) {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+
+        table:not(.gantt) thead th {
+            background: #064e3b;
+            color: #fff;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        table:not(.gantt) thead th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        table:not(.gantt) thead th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        table:not(.gantt) tbody td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #374151;
+        }
+
+        table:not(.gantt) tbody tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 40px;
+        }
+
+        @media print {
+            .page {
+                padding: 40px 50px;
+            }
+        }
+
+        /* ─── PORTAL NAV ─── */
+        .portal-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 24px;
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        .portal-nav .nav-tabs {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .portal-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #94a3b8;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .portal-nav a:hover {
+            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .portal-nav a.active {
+            color: #fff;
+            background: rgba(99, 102, 241, 0.25);
+            border-color: rgba(99, 102, 241, 0.4);
+            font-weight: 600;
+        }
+
+        .portal-nav .pdf-link {
+            padding: 4px 10px;
+            font-size: 11px;
+            color: #c7d2fe;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            border-radius: 6px;
+            margin-left: 4px;
+        }
+
+        .portal-nav .pdf-link:hover {
+            background: rgba(99, 102, 241, 0.4);
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .portal-nav {
+                flex-direction: column;
+                padding: 8px 12px;
+                gap: 6px;
+            }
+
+            .portal-nav .nav-tabs {
+                flex-direction: column;
+                width: 100%;
+                gap: 3px;
+            }
+
+            .portal-nav a {
+                justify-content: center;
+                padding: 10px 14px;
+            }
+        }
+
+        @media print {
+            .portal-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="portal-nav">
+        <div class="nav-tabs">
+            <a href="01-commercial-proposal.html">📋 Коммерческое предложение <span class="pdf-link"
+                    onclick="event.preventDefault();window.open('01-Коммерческое-Предложение.pdf')">⬇ PDF</span></a>
+            <a href="02-work-plan.html" class="active">📅 План работ <span class="pdf-link"
+                    onclick="event.preventDefault();window.open('02-План-Работ.pdf')">⬇ PDF</span></a>
+            <a href="03-technical-spec.html">⚙️ Техническое задание <span class="pdf-link"
+                    onclick="event.preventDefault();window.open('03-Техническое-Задание.pdf')">⬇ PDF</span></a>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════ ОБЛОЖКА ═══════════════════ -->
+    <div class="cover">
+        <div class="cover-badge">План работ</div>
+        <h1>Этапы <span>реализации</span><br>проекта</h1>
+        <p class="cover-subtitle">
+            Детальный план внедрения автоматизированной системы привлечения агентов и анализа качества продаж
+        </p>
+        <div class="cover-meta">
+            <span>Заказчик: Яна</span>
+            <span>Дата: 13 февраля 2026</span>
+            <span>Срок: 15-23 рабочих дня</span>
+        </div>
+    </div>
+
+    <!-- ═══════════════════ ЭТАПЫ ═══════════════════ -->
+    <div class="page">
+        <div class="section-label">Детализация</div>
+        <h2>Этапы реализации</h2>
+        <p class="subtitle">Каждый этап — логически завершённый блок с конкретным результатом</p>
+
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-num">1</div>
+                <div class="phase-title">
+                    <h4>Настройка инфраструктуры</h4>
+                    <span>VPS, ИИ-агент, Telegram-боты</span>
+                </div>
+                <div class="phase-duration">2-3 дня</div>
+            </div>
+            <div class="phase-body">
+                <ul>
+                    <li>Развёртывание VPS-сервера (Contabo или Hetzner, 4 vCPU, 8GB RAM)</li>
+                    <li>Установка и настройка ИИ-агента OpenClaw</li>
+                    <li>Настройка Nginx как reverse proxy + SSL-сертификат (Let's Encrypt)</li>
+                    <li>Создание и настройка двух Telegram-ботов через @BotFather</li>
+                    <li>Установка Docker + Docker Compose для сервисов</li>
+                    <li>Настройка файрвола (UFW) и базовой безопасности</li>
+                </ul>
+                <div class="deliverable">
+                    <strong>✅ Результат:</strong> Работающий VPS с OpenClaw, два Telegram-бота отвечают на /start
+                </div>
+            </div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-num">2</div>
+                <div class="phase-title">
+                    <h4>Модуль автообзвона (Zvonok.com)</h4>
+                    <span>API-интеграция, IVR-сценарий, webhook</span>
+                </div>
+                <div class="phase-duration">2-3 дня</div>
+            </div>
+            <div class="phase-body">
+                <ul>
+                    <li>Регистрация и настройка кабинета Zvonok.com</li>
+                    <li>Создание IVR-сценария с текстом коммерческого предложения</li>
+                    <li>Настройка DTMF-обработки (нажатие кнопки «1» = заинтересован)</li>
+                    <li>Разработка OpenClaw skill для массовой загрузки номеров</li>
+                    <li>Настройка webhook-обработчика для приёма результатов</li>
+                    <li>Тестирование на 10-20 номерах</li>
+                </ul>
+                <div class="deliverable">
+                    <strong>✅ Результат:</strong> Робот звонит, воспроизводит предложение, при нажатии «1» — webhook
+                    приходит на сервер
+                </div>
+            </div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-num">3</div>
+                <div class="phase-title">
+                    <h4>Интеграция с AmoCRM</h4>
+                    <span>Контакты, сделки, воронка, IP-телефония</span>
+                </div>
+                <div class="phase-duration">2-3 дня</div>
+            </div>
+            <div class="phase-body">
+                <ul>
+                    <li>Регистрация интеграции в amoMarket (OAuth 2.0)</li>
+                    <li>Настройка воронки продаж (6 этапов)</li>
+                    <li>Разработка автоматического создания контактов и сделок</li>
+                    <li>Подключение IP-телефонии (OnlinePBX / Sipuni)</li>
+                    <li>Настройка записи разговоров и webhook при завершении звонка</li>
+                    <li>Связка webhook Zvonok → AmoCRM (создание лида при нажатии «1»)</li>
+                </ul>
+                <div class="deliverable">
+                    <strong>✅ Результат:</strong> Заинтересованный агент автоматически попадает в CRM, менеджер получает
+                    уведомление, звонки записываются
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-num">4</div>
+                <div class="phase-title">
+                    <h4>ИИ-модуль анализа разговоров</h4>
+                    <span>Whisper + GPT-4o (виртуальный РОП)</span>
+                </div>
+                <div class="phase-duration">3-4 дня</div>
+            </div>
+            <div class="phase-body">
+                <ul>
+                    <li>Интеграция с OpenAI Whisper API для транскрипции аудио</li>
+                    <li>Разработка промпта для LLM-анализа (виртуальный РОП)</li>
+                    <li>Настройка 5 критериев оценки (приветствие, потребности, презентация, возражения, закрытие)</li>
+                    <li>Формирование структурированного отчёта (JSON → форматированное сообщение)</li>
+                    <li>Отправка результатов в служебный Telegram-бот и примечание в AmoCRM</li>
+                    <li>Обработка длинных записей (>25MB): нарезка на чанки</li>
+                </ul>
+                <div class="deliverable">
+                    <strong>✅ Результат:</strong> Каждый разговор автоматически оценивается, менеджер получает оценку и
+                    рекомендации
+                </div>
+            </div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-num">5</div>
+                <div class="phase-title">
+                    <h4>Векторная база знаний (RAG)</h4>
+                    <span>Qdrant, эмбеддинги, семантический поиск</span>
+                </div>
+                <div class="phase-duration">2-3 дня</div>
+            </div>
+            <div class="phase-body">
+                <ul>
+                    <li>Установка Qdrant (Docker) на VPS</li>
+                    <li>Создание коллекций: транскрипции разговоров + база знаний</li>
+                    <li>Загрузка эталонных скриптов, FAQ, описания предложения</li>
+                    <li>Интеграция RAG в анализ: сравнение с лучшими практиками</li>
+                    <li>Автоматическое сохранение каждой транскрипции в базу</li>
+                </ul>
+                <div class="deliverable">
+                    <strong>✅ Результат:</strong> ИИ анализирует разговоры с учётом эталонных скриптов и лучших примеров
+                </div>
+            </div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-num">6</div>
+                <div class="phase-title">
+                    <h4>Служебный Telegram-бот</h4>
+                    <span>Интерфейс для менеджеров</span>
+                </div>
+                <div class="phase-duration">1-2 дня</div>
+            </div>
+            <div class="phase-body">
+                <ul>
+                    <li>Настройка отправки ИИ-отчётов в бот с форматированием</li>
+                    <li>Команды: просмотр своей статистики, история оценок</li>
+                    <li>Авторизация менеджеров (Telegram Pairing)</li>
+                </ul>
+                <div class="deliverable">
+                    <strong>✅ Результат:</strong> Менеджеры получают оценки после каждого разговора прямо в Telegram
+                </div>
+            </div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-num">7</div>
+                <div class="phase-title">
+                    <h4>Тестирование и запуск</h4>
+                    <span>End-to-end, отладка, обучение</span>
+                </div>
+                <div class="phase-duration">3-5 дней</div>
+            </div>
+            <div class="phase-body">
+                <ul>
+                    <li>Сквозное тестирование: загрузка базы → обзвон → CRM → анализ → отчёт</li>
+                    <li>Тестирование на реальных номерах (пилотная кампания 50-100 номеров)</li>
+                    <li>Отладка edge cases (таймауты, повторные звонки, ошибки API)</li>
+                    <li>Инструкция для Яны по использованию Telegram-бота</li>
+                    <li>Инструкция для менеджеров</li>
+                </ul>
+                <div class="deliverable">
+                    <strong>✅ Результат:</strong> Система полностью работает, все участники обучены
+                </div>
+            </div>
+        </div>
+
+        <div class="milestone-box">
+            <h4>🎯 Итоговый результат</h4>
+            <p>Полностью автоматизированная система привлечения агентов, готовая к промышленному использованию.</p>
+        </div>
+
+        <div class="footer">
+            © 2026 · План работ для Яны · v1.0
+        </div>
+    </div>
+
+</body>
+
+</html>
